@@ -76,8 +76,8 @@ uat_up:
 
 uat_down:
 	@docker compose -f docker-compose-uat.yml down -v
-	@docker rm -f tealicious-shop
-	@docker rmi -f tealicious-shop
+	@docker rm -f passport-test
+	@docker rmi -f passport-test
 	@sudo rm -rf .tealicious-volume
 
 # Production
@@ -86,5 +86,5 @@ prod_up:
 
 prod_down:
 	@docker compose -f docker-compose-prod.yml down -v
-	@docker rm -f tealicious-shop
-	@docker rmi -f tealicious-shop
+	@docker rm -f passport-test
+	@docker rmi -f passport-test
