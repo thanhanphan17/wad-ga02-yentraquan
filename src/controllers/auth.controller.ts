@@ -1,6 +1,7 @@
 import { NextFunction } from 'express'
 import passport from 'passport'
 import authService from '~/services/auth.service'
+
 class AuthController {
     login = passport.authenticate('local', {
         successRedirect: '/profile',
@@ -14,6 +15,8 @@ class AuthController {
                 success: false,
                 message: response.message
             }
+        } else {
+            res.redirect('/success')
         }
         return {
             success: true,

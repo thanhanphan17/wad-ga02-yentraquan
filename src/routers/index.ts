@@ -1,22 +1,32 @@
 import express, { NextFunction } from 'express'
 import authController from '~/controllers/auth.controller'
 import { isLoggedIn } from '~/middlewares/authentication'
+import User from '~/models/user.model'
 
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    res.render('login')
+    const user = req.user as User
+    res.render('login', { user })
 })
 
 router.get('/profile', isLoggedIn, (req, res) => {
-    res.render('profile')
+    const user = req.user as User
+    res.render('profile', { user })
+})
+
+router.get('/success', (req, res) => {
+    const user = req.user as User
+    res.render('successRegister')
 })
 
 router.get('/about-us', (req, res) => {
+    const user = req.user as User
     res.render('about-us')
 })
 
 router.get('/login', (req, res) => {
+    const user = req.user as User
     res.render('login')
 })
 
@@ -29,6 +39,7 @@ router.get('/login-failed', (req, res) => {
 })
 
 router.get('/sign-up', (req, res, next: NextFunction) => {
+    const user = req.user as User
     res.render('signup')
 })
 
