@@ -2,9 +2,9 @@ version: '3.7'
 
 services:
     app:
-        container_name: tealicious-shop
+        container_name: passport-test
         restart: always
-        image: tealicious-shop
+        image: passport-test
         build:
             dockerfile: Dockerfile
             context: .
