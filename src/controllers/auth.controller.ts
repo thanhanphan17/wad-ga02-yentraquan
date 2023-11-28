@@ -11,6 +11,7 @@ class AuthController {
     register = async (req: any, res: any, next: NextFunction) => {
         const response = await authService.register(req.body)
         if (!response.user) {
+            res.redirect('/signup-failed')
             return {
                 success: false,
                 message: response.message

@@ -15,6 +15,11 @@ router.get('/profile', isLoggedIn, (req, res) => {
     res.render('profile', { user })
 })
 
+router.get('/signup-failed', (req, res) => {
+    const user = req.user as User
+    res.render('signup-failed')
+})
+
 router.get('/success', (req, res) => {
     const user = req.user as User
     res.render('successRegister')
