@@ -1,3 +1,4 @@
+import { Response } from 'express'
 import Prisma from '~/dbs/init.prisma'
 import { Strategy as LocalStrategy } from 'passport-local'
 import passport from 'passport'
@@ -6,13 +7,13 @@ import AuthService from '~/services/auth.service'
 passport.use(
     new LocalStrategy(async (username, password, done) => {
         try {
-            const user = await AuthService.login({ username, password })
-            if (!user) {
-                return done(null, false, { message: 'username or password is incorrect' })
+            const response = await AuthService.login({ username, password })
+            if (!response.user) {
+                return done(null, false, { message: response.message })
             }
 
             return done(null, {
-                user
+                user: response.user
             })
         } catch (error) {
             return done(null, false)
