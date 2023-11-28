@@ -13,6 +13,7 @@ passport.use(
                 return done(null, false, { message: response.message })
             }
 
+            console.log('LocalStrategy:::response', response)
             return done(null, {
                 user: response.user
             })

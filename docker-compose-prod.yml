@@ -1,10 +1,8 @@
 version: '3.7'
 
-### Postgres and MongoDB are deploy separately
-
 services:
     app:
-        container_name: tealicious-shop
+        container_name: passport-test
         restart: always
         image: tealicious-shop
         build:
