@@ -9,6 +9,16 @@ router.get('/', (req, res) => {
     res.render('login')
 })
 
+router.get('/login', (req, res) => {
+    // call controller
+    res.render('login')
+})
+
+router.get('/unauthorized', (req, res) => {
+    // call controller
+    res.render('404')
+})
+
 router.post('/login', async (req, res, next: NextFunction) => {
     // call controller
     const result = await authController.login(req, res, next)
@@ -27,5 +37,10 @@ router.post('/sign-up', async (req, res, next: NextFunction) => {
 })
 
 router.get('/profile', isLoggedIn, (req, res) => {})
+
+router.get('/logout', (req: any, res) => {
+    // clear session
+    req.session.destroy()
+})
 
 export default router

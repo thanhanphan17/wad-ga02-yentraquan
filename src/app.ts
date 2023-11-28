@@ -25,10 +25,10 @@ app.set('views', 'src/views')
 // Init middlewares
 app.use(
     session({
-        saveUninitialized: true,
+        saveUninitialized: false,
         secret: process.env.SESSION_SECRET || 'secret',
         cookie: {
-            maxAge: 1000 * 20 // 10s
+            maxAge: 1000 * 100
         },
         store: new session.MemoryStore()
     })
