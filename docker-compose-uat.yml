@@ -1,0 +1,74 @@
+version: '3.7'
+
+services:
+    app:
+        container_name: tealicious-shop
+        restart: always
+        image: tealicious-shop
+        build:
+            dockerfile: Dockerfile
+            context: .
+        depends_on:
+            postgres:
+                condition: service_healthy
+            mongodb:
+                condition: service_healthy
+        links:
+            - postgres
+            - mongodb
+        environment:
+            - RUNTIME_ENV=uat
+        command:
+            - '/bin/sh'
+            - '-c'
+            - 'make db_push env=uat && make db_seed env=uat'
+        ports:
+            - '80:8080'
+        networks:
+            - uat_network
+
+    postgres:
+        container_name: postgres-db
+        restart: always
+        image: postgres:latest
+        volumes:
+            - './.tealicious-volume:/var/lib/postgresql/data'
+        environment:
+            POSTGRES_USER: 'postgres'
+            POSTGRES_PASSWORD: '0000'
+            POSTGRES_DB: 'tealicious_db'
+        ports:
+            - '5432:5432'
+        healthcheck:
+            test: ['CMD-SHELL', 'pg_isready -U postgres -d tealicious_db']
+            interval: 10s
+            timeout: 10s
+            retries: 5
+        networks:
+            - uat_network
+
+    mongodb:
+        image: mongo:latest
+        container_name: mongo-db
+        restart: always
+        ports:
+            - 27017:27017
+        environment:
+            - MONGO_INITDB_DATABASE=tealicious_db
+            - MONGO_INITDB_ROOT_USERNAME=tealicious_shop
+            - MONGO_INITDB_ROOT_PASSWORD=tealicious_shop
+
+        volumes:
+            - ./mongodb/init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+            - './.tealicious-volume:/var/lib/mongodb/data'
+        healthcheck:
+            test: ['CMD-SHELL', 'mongosh', '--eval', "db.adminCommand('ping')"]
+            interval: 10s
+            timeout: 10s
+            retries: 5
+        networks:
+            - uat_network
+
+networks:
+    uat_network:
+        name: uat_network
