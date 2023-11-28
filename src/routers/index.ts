@@ -22,7 +22,7 @@ router.get('/success', (req, res) => {
 
 router.get('/about-us', (req, res) => {
     const user = req.user as User
-    res.render('about-us')
+    res.render('about-us', { user })
 })
 
 router.get('/login', (req, res) => {
