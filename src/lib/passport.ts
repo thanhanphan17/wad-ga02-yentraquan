@@ -6,6 +6,7 @@ import AuthService from '~/services/auth.service'
 
 passport.use(
     new LocalStrategy(async (username, password, done) => {
+        console.log('LocalStrategy:::', username, password)
         try {
             const response = await AuthService.login({ username, password })
             if (!response.user) {
@@ -24,8 +25,9 @@ passport.use(
 passport.serializeUser((user: any, done) => done(null, user.user))
 
 passport.deserializeUser(async (user: any, done) => {
+    console.log('Deserialize:::', user)
     try {
-        const foundUser = await Prisma.user.findUnique({ where: { username: user.user.email } })
+        const foundUser = await Prisma.user.findUnique({ where: { username: user.username } })
         if (foundUser) {
             done(null, foundUser)
         }

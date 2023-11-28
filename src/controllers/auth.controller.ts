@@ -2,12 +2,12 @@ import { NextFunction } from 'express'
 import passport from 'passport'
 import authService from '~/services/auth.service'
 class AuthController {
-    authenticate = passport.authenticate('local', {
+    login = passport.authenticate('local', {
         successRedirect: '/profile',
         failureRedirect: '/login-failed'
     })
 
-    register = async (req: any, res: Response, next: NextFunction) => {
+    register = async (req: any, res: any, next: NextFunction) => {
         const response = await authService.register(req.body)
         if (!response.user) {
             return {
