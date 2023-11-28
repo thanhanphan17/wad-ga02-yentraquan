@@ -5,42 +5,42 @@ import { isLoggedIn } from '~/middlewares/authentication'
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    // call controller
     res.render('login')
+})
+
+router.get('/profile', isLoggedIn, (req, res) => {
+    res.render('profile')
+})
+
+router.get('/about-us', (req, res) => {
+    res.render('about-us')
 })
 
 router.get('/login', (req, res) => {
-    // call controller
     res.render('login')
 })
 
-router.get('/unauthorized', (req, res) => {
-    // call controller
-    res.render('404')
+router.post('/login', async (req, res, next: NextFunction) => {
+    await authController.login(req, res, next)
 })
 
-router.post('/login', async (req, res, next: NextFunction) => {
-    // call controller
-    const result = await authController.login(req, res, next)
-    console.log(result)
+router.get('/login-failed', (req, res) => {
+    res.render('login-failed')
 })
 
 router.get('/sign-up', (req, res, next: NextFunction) => {
-    // call controller
     res.render('signup')
 })
 
 router.post('/sign-up', async (req, res, next: NextFunction) => {
-    // call controller
     const result = await authController.register(req, res, next)
     console.log(result)
 })
 
-router.get('/profile', isLoggedIn, (req, res) => {})
+router.get('/logout', authController.logout)
 
-router.get('/logout', (req: any, res) => {
-    // clear session
-    req.session.destroy()
+router.get('/unauthorized', (req, res) => {
+    res.render('404')
 })
 
 export default router

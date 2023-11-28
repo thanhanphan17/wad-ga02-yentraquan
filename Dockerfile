@@ -66,4 +66,4 @@ CMD ["dotenv", "-e", "/env/prod.env", "--", "npm", "run", "start"]
 ENTRYPOINT  make start env=${RUNTIME_ENV}
 
 # Expose the port
-EXPOSE 8080
+EXPOSE 8888

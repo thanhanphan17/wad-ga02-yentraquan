@@ -1,8 +1,5 @@
 import bcrypt from 'bcryptjs'
-import crypto from 'crypto'
 import Prisma from '~/dbs/init.prisma'
-
-import { getInfoData } from '~/utils/response.utils'
 
 class AuthService {
     /**

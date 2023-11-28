@@ -25,7 +25,8 @@ app.set('views', 'src/views')
 // Init middlewares
 app.use(
     session({
-        saveUninitialized: false,
+        resave: true,
+        saveUninitialized: true,
         secret: process.env.SESSION_SECRET || 'secret',
         cookie: {
             maxAge: 1000 * 100

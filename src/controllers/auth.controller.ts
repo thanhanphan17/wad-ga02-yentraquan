@@ -26,6 +26,11 @@ class AuthController {
             user: req.user
         }
     }
+
+    logout = (req: any, res: any) => {
+        req.session.destroy()
+        res.redirect('/')
+    }
 }
 
 export default new AuthController()
